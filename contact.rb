@@ -8,11 +8,11 @@ class Contact
 
 
   # This method should initialize the contact's attributes
-  def initialize(first_name, last_name, email, notes = 'N/A')
+  def initialize(first_name, last_name, email, notes)
     @first_name = first_name
     @last_name = last_name
     @email = email
-    @notes = 'N/A'
+    @notes = notes
 
     @id = @@id
     @@id += 1
@@ -20,15 +20,15 @@ class Contact
 
   # This method should call the initializer,
   # store the newly created contact, and then return it
-  def self.create(first_name, last_name, email, notes = 'N/A')
-    new_contact = Contact.new(first_name, last_name, email, notes = 'N/A')
+  def self.create(first_name, last_name, email, notes)
+    new_contact = Contact.new(first_name, last_name, email, notes)
     @@contacts << new_contact
     new_contact
   end
 
   # This method should return all of the existing contacts
   def self.all
-    @@contacts
+    return @@contacts
   end
 
   # This method should accept an id as an argument
@@ -46,9 +46,17 @@ class Contact
   # 2. the new value for that attribute
   # and then make the appropriate change to the contact
   def update(attribute, value)
-    if attribute == 'first name'
+    if attribute == 'first_name'
         self.first_name = value
-        return self
+
+    elsif attribute == 'last_name'
+          self.last_name = value
+
+    elsif attribute == 'email'
+          self.email = value
+
+    elsif attribute == 'note'
+          self.note = value
 
     end
 
@@ -61,31 +69,55 @@ class Contact
 
   # var.send(attribute) = Black magic
 
-  def self.find_by(attribute, name)
-      if attribute == 'first name'
-        @@contacts.each do |var|
-          if var.first_name == name
-          return var
-           end
-          end
+  # def self.find_by(attribute, value)
+  #     if attribute == 'first_name'
+  #       @@contacts.each do |var|
+  #         if var.first_name == name
+  #         return var
+  #          end
+  #         end
+  #
+  #
+  #     elsif attribute == 'last_name'
+  #       @@contacts.each do |var|
+  #         if var.last_name == value
+  #           return var
+  #         end
+  #       end
+  #
+  #
+  #     elsif attribute == 'email'
+  #       @@contacts.each do |var|
+  #         if var.email == value
+  #           return var
+  #         end
+  #       end
+  #     end
+  # end
 
-
-      elsif attribute == 'last name'
-        @@contacts.each do |var|
-          if var.last_name == name
-            return var
+    def self.find_by(attribute, value)
+      matched_contacts = []
+      if attribute == 'first_name'
+        @@contacts.each do |current_contact|
+          if current_contact.first_name == value
+            matched_contacts << current_contact
           end
         end
-
-
+      elsif attribute == 'last_name'
+        @@contacts.each do |current_contact|
+          if current_contact.last_name == value
+            matched_contacts << current_contact
+          end
+        end
       elsif attribute == 'email'
-        @@contacts.each do |var|
-          if var.email == name
-            return var
+        @@contacts.each do |current_contact|
+          if current_contact.last_name == value
+            matched_contacts << current_contact
           end
         end
       end
-  end
+      return matched_contacts
+    end
 
   # This method should delete all of the contacts
   def self.delete_all
