@@ -12,11 +12,10 @@
   field :note,       as: :text
 
   # end
-  # Film.auto_upgrade!
 
 
   # attr_reader :id
-  # attr_accessor :first_name, :last_name, :email, :notes #read and write variables
+  # attr_accessor :first_nam, :last_name, :email, :notes #read and write variables
   #
   # @@contacts = []
   # @@id = 1000
@@ -157,6 +156,8 @@
   end
 
 end
+
+Contact.auto_upgrade!
 
 
 # jen = Contact.create('Jen', 'Lopez', 'jlo@gmail.com')

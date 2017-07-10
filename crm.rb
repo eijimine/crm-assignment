@@ -50,7 +50,13 @@ class CRM
     print 'Enter a Note: '
     note = gets.chomp
 
-    Contact.create(first_name, last_name, email, note)
+    # Contact.create(first_name, last_name, email, note)
+    contact = Contact.create(
+    first_name: first_name,
+    last_name:  last_name,
+    email:      email,
+    note:       note
+    )
   end
 
   def modify_existing_contact
@@ -66,13 +72,13 @@ class CRM
     print "What would you like to change it to?"
     value = gets.chomp
 
-    contacts = Contact.find_by('first_name', name)
-    new_contact = contacts[0]
+    contacts = Contact.find_by_first_name(name)
+    new_contact = contacts
     if new_contact == nil
       puts "Invalid entry, please start again."
       main_menu
     else
-    new_contact.update(attribute, value)
+    new_contact.update(attribute => value)
   end
   end
 
@@ -81,8 +87,8 @@ class CRM
     name = gets.chomp
 
 
-    contacts = Contact.find_by('first_name', name)
-    new_contact = contacts[0]
+    contacts = Contact.find_by_first_name(name)
+    new_contact = contacts
     if new_contact == nil
       puts "Invalid entry, please start again."
       main_menu
@@ -101,10 +107,10 @@ class CRM
     attribute = gets.chomp
     value = gets.chomp
 
-    contacts = Contact.find_by(attribute, value)
-    contacts.each do |contact|
-      puts "Contact info: #{contact.inspect}."
-    end
+    contacts = Contact.find_by(attribute => value)
+    #contacts.each do |contact|
+      puts "Contact info: #{contacts.inspect}."
+    #end
   end
 
 
